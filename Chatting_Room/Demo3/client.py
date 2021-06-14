@@ -39,7 +39,7 @@ while True:
             print("------------------------\nFinish Receive\n-----------------------------")
         else:
             print("------------------------\nSend\n-----------------------------")
-            message = sys.stdin.readline()
+            # message = sys.stdin.readline()
             # print("[" + socket.gethostbyname(socket.gethostname()) + "] ", end='')
             # print(message)
             if message[0:4] == "send":
