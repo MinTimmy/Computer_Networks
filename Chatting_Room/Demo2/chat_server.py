@@ -21,10 +21,10 @@ if len(sys.argv) != 3:
     exit()
 IP_address = str(sys.argv[1])
 Port = int(sys.argv[2])
-# IP_address = socket.gethostbyname(socket.gethostname())
+IP_address = socket.gethostbyname(socket.gethostname())
 # IP_address = "127.0.0.1"
-# Port = 8080
-# server.bind((IP_address, Port)) 
+Port = 8080
+server.bind((IP_address, Port)) 
 #listens for 100 active connections. This number can be increased as per convenience
 list_of_clients=[]
 
