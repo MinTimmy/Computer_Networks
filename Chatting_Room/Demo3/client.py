@@ -32,7 +32,7 @@ while True:
                 file = open(message, 'wb')
                 message = ""
                 message = socks.recv(2048)
-                while message:
+                while message != b'end\n':
                     file.write(message)
                     message = socks.recv(2048)
             else:

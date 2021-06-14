@@ -46,6 +46,7 @@ class clientThread(threading.Thread):
             try:     
                 message = self.conn.recv(2048).decode('UTF-8')
                 print(message[:4]) 
+                filename = message[5:len(filename)-1]
                 if message[:4] == 'send':
                     print("hello")
                     temp = self.conn.recv(2048)
@@ -53,7 +54,9 @@ class clientThread(threading.Thread):
                         file.write(temp)
                         temp = self.conn.recv(2048)
                         print(temp)
+                    self.broadcast_file(filename,self.conn)
                     print("end")
+                    file.close()
                 else:
                     # print(message)
                     # message = bytes(message, 'UTF-8')
@@ -70,23 +73,38 @@ class clientThread(threading.Thread):
             except:
                 self.remove(self.conn)
                 continue
-    def broadcast_file(self, message,connection):
+    def broadcast_file(self, filename, connection):
         print("Do broadcast")
-        print(list_of_clients)
+        file = open("buffer", 'rb')
+        # print(list_of_clients)
         for clients in list_of_clients:
             if clients!=connection:
+                server.sendall(bytes('file', 'UTF-8'))
+                time.sleep(2)
+                server.sendall(bytes('file', 'UTF-8'))
+                time.sleep(1)
                 try:
-                    clients.sendall(bytes(message, 'UTF-8'))
+                    imgData = file.readline(2048)
+                    while(imgData):
+                        clients.send(imgData)
+                        imgData = file.readline(2048)
+                        if not imgData:
+                            break
+                    time.sleep(5)
+                    print("finish")
+                    server.sendall(bytes('end\n', 'UTF-8'))
                 except:
                     clients.close()
                     self.remove(clients)
 
     def broadcast_message(self, message,connection):
         print("Do broadcast")
-        print(list_of_clients)
+        # print(list_of_clients)
         for clients in list_of_clients:
             if clients!=connection:
                 try:
+                    clients.sendall(bytes(message, 'UTF-8'))
+                    time.sleep(2)
                     clients.sendall(bytes(message, 'UTF-8'))
                 except:
                     clients.close()
