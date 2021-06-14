@@ -36,9 +36,9 @@ while True:
                 message = socks.recv(2048).decode('UTF-8')
                 print (message)
         else:
-            # message = sys.stdin.readline()
-            message = input("[" + socket.gethostbyname(socket.gethostname()) + "] ", end='')
-            print(message)
+            message = sys.stdin.readline()
+            # print("[" + socket.gethostbyname(socket.gethostname()) + "] ", end='')
+            # print(message)
             if message[0:4] == "send":
                 message = 'send 2.jpg\n'
                 server.sendall(bytes(message, 'UTF-8'))
