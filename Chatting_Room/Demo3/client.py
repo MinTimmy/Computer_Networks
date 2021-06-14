@@ -32,15 +32,13 @@ while True:
                     file.write(message)
                     message = socks.recv(2048)
             else:
-                while message:
-                    message = ""
-                    message = socks.recv(2048).decode('UTF-8')
-                    print (message)
+                message = ""
+                message = socks.recv(2048).decode('UTF-8')
+                print (message)
         else:
             print("send [filename]")
             message = sys.stdin.readline()
             if message[0:4] == "send":
-
                 message = 'send 2.jpg\n'
                 server.sendall(bytes(message, 'UTF-8'))
                 sys.stdout.write("<You>")

@@ -117,6 +117,7 @@ while True:
     # _thread.start_new_thread(clientthread,(conn,addr))
 
     # print("hello")
+    print(list_of_clients)
     newtread = clientThread(clientAddress, clientSocket)
     newtread.start()
 
