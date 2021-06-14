@@ -23,6 +23,7 @@ while True:
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
     for socks in read_sockets:
         if socks == server:
+            print("------------------------\nReceive\n-----------------------------")
             message = socks.recv(2048).decode('UTF-8')
             if message == "file":
                 file = open(message, 'wb')
@@ -36,6 +37,7 @@ while True:
                 message = socks.recv(2048).decode('UTF-8')
                 print (message)
         else:
+            print("------------------------\nSend\n-----------------------------")
             message = sys.stdin.readline()
             # print("[" + socket.gethostbyname(socket.gethostname()) + "] ", end='')
             # print(message)
