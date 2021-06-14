@@ -23,7 +23,7 @@ while True:
     sockets_list = [sys.stdin, server]
     print("hello1")
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
-    print("hello2")
+    print("hello2", read_sockets)
     for socks in read_sockets:
         if socks == server:
             print("------------------------\nReceive\n-----------------------------")
