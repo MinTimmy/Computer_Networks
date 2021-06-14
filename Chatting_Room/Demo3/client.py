@@ -24,18 +24,18 @@ while True:
     for socks in read_sockets:
         if socks == server:
             message = socks.recv(2048).decode('UTF-8')
-            if message == "message":
-                while message:
-                    message = ""
-                    message = socks.recv(2048).decode('UTF-8')
-                    print (message)
-            else:
+            if message == "file":
                 file = open(message, 'wb')
                 message = ""
                 message = socks.recv(2048)
                 while message:
                     file.write(message)
                     message = socks.recv(2048)
+            else:
+                while message:
+                    message = ""
+                    message = socks.recv(2048).decode('UTF-8')
+                    print (message)
         else:
             print("send [filename]")
             message = sys.stdin.readline()
