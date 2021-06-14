@@ -67,13 +67,12 @@ class clientThread(threading.Thread):
                     message_to_send = "<" + self.addr[0] + "> " + message
                     self.broadcast_message(message_to_send,self.conn)
                     #prints the message and address of the user who just sent the message on the server terminal 
-                                       
-                self.remove(self.conn)
             except:
+                self.remove(self.conn)
                 continue
     def broadcast_file(self, message,connection):
-        # print("Do broadcast")
-        # print(list_of_clients)
+        print("Do broadcast")
+        print(list_of_clients)
         for clients in list_of_clients:
             if clients!=connection:
                 try:
@@ -83,8 +82,8 @@ class clientThread(threading.Thread):
                     self.remove(clients)
 
     def broadcast_message(self, message,connection):
-        # print("Do broadcast")
-        # print(list_of_clients)
+        print("Do broadcast")
+        print(list_of_clients)
         for clients in list_of_clients:
             if clients!=connection:
                 try:
@@ -117,7 +116,7 @@ while True:
     # _thread.start_new_thread(clientthread,(conn,addr))
 
     # print("hello")
-    print(list_of_clients)
+    # print(list_of_clients)
     newtread = clientThread(clientAddress, clientSocket)
     newtread.start()
 
