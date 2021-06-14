@@ -1,0 +1,25 @@
+2020/9/29: I have finished the part of TCP code.I can't find the difference from solo connection and multi connection.In the future, I want to come up with a method which can comply many python files at the same time.
+
+2020/10/3: after finding some document on th eInternet, I don't need to  come up with a method which can comply many python files at the same time.I need to think about the problem of buffer.
+
+2020/10/5:try the connection between xerver and client in different Internet,but it is failed.
+
+2020/10/7: 
+I got the problem "accept() fails with Operation not supported"
+Answer: 
+	server = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+	socket.SOCK_DGRAM is for UDP
+	socket.SOCKSTREAM is for TCP
+
+I got mistake: "ConnectionRefusedError: [Errno 111] Connection refused."
+Solution:
+	server.bind(('', port)) #Bind to the port
+	server.bind(('server.bind((HOST, PORT))')
+
+	so that the listening socket isn't too restricted. Maybe otherwise the listening only occurs on one interface which, in turn, isn't related with the local network.
+
+	One example could be that it only listens to 127.0.0.1, which makes connecting from a different host impossible.
+
+Next Goal: connect by IPv6

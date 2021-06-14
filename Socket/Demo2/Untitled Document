@@ -1,0 +1,7 @@
+str轉bytes：
+bytes('123', encoding='utf8')
+str.encode('123')
+
+bytes轉str：
+str(b'123', encoding='utf-8')
+bytes.decode(b'123')
