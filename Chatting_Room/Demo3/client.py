@@ -21,7 +21,9 @@ server.connect((IP_address, Port))
 while True:
     print("Connecting successfully")
     sockets_list = [sys.stdin, server]
+    print("hello1")
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
+    print("hello2")
     for socks in read_sockets:
         if socks == server:
             print("------------------------\nReceive\n-----------------------------")
