@@ -20,8 +20,8 @@ server.connect((IP_address, Port))
 
 while True:
     sockets_list = [sys.stdin.readline(), server]
-    print(message)
     message = sockets_list[0]
+    print(message)
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
     for socks in read_sockets:
         if socks == server:
