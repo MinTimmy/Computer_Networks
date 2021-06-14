@@ -37,7 +37,7 @@ while True:
                 print (message)
         else:
             # print("send [filename]")
-            print("[" + socket.gethostname() + "] ")
+            print("[" + socket.gethostbyname(socket.gethostname()) + "] ", end='')
             message = sys.stdin.readline()
             if message[0:4] == "send":
                 message = 'send 2.jpg\n'
