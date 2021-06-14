@@ -48,6 +48,7 @@ while True:
             if message[0:4] == "send":
                 message = 'send 2.jpg\n'
                 server.sendall(bytes(message, 'UTF-8'))
+                time.sleep(1)
                 sys.stdout.write("<You>")
                 sys.stdout.write(message)
                 sys.stdout.flush()

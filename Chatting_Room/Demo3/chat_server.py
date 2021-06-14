@@ -41,19 +41,22 @@ class clientThread(threading.Thread):
         print("Connection from", self.addr[0])
         CA = clientAddress
         message = ''
-        file = open('buffer','wb')
+        
         while True:
             try:     
                 message = self.conn.recv(2048).decode('UTF-8')
+                print("fsidfhjslodfowedifjnweiofjiewofjewiofjeiwfweifjwo")
                 print(message[:4]) 
                 filename = message[5:len(filename)-1]
                 if message[:4] == 'send':
+                    
+                    file = open('buffer','wb')
                     print("hello")
                     temp = self.conn.recv(2048)
                     while temp != b'end\n':
                         file.write(temp)
                         temp = self.conn.recv(2048)
-                        print(temp)
+                        # print(temp)
                     self.broadcast_file(filename,self.conn)
                     print("end")
                     file.close()
