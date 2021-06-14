@@ -36,6 +36,7 @@ while True:
                 message = ""
                 message = socks.recv(2048).decode('UTF-8')
                 print (message)
+            print("------------------------\nFinish Receive\n-----------------------------")
         else:
             print("------------------------\nSend\n-----------------------------")
             message = sys.stdin.readline()
@@ -63,6 +64,7 @@ while True:
                 sys.stdout.write("<You>")
                 sys.stdout.write(message)
                 sys.stdout.flush()
+            print("------------------------\nfinish Send\n-----------------------------")
                
             
 server.close()
