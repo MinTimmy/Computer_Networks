@@ -19,9 +19,8 @@ Port = 8080
 server.connect((IP_address, Port))
 
 while True:
-    sockets_list = [sys.stdin.readline(), server]
-    message = sockets_list[0]
-    print(message)
+    print("Connecting successfully")
+    sockets_list = [sys.stdin, server]
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
     for socks in read_sockets:
         if socks == server:
@@ -41,7 +40,7 @@ while True:
             print("------------------------\nFinish Receive\n-----------------------------")
         else:
             print("------------------------\nSend\n-----------------------------")
-            # message = sys.stdin.readline()
+            message = sys.stdin.readline()
             # print("[" + socket.gethostbyname(socket.gethostname()) + "] ", end='')
             # print(message)
             if message[0:4] == "send":
