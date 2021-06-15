@@ -25,6 +25,7 @@ IP_address = socket.gethostbyname(socket.gethostname())
 Port = 8080
 server.bind((IP_address, Port)) 
 
+print("Server is on and waiting for clients.\n-------------------------------------------------------")
 
 #listens for 100 active connections. This number can be increased as per convenience
 list_of_clients=[]
@@ -38,7 +39,7 @@ class clientThread(threading.Thread):
         print("New Connection: " , self.addr[0])
 
     def run(self):
-        print("Connection from", self.addr[0])
+        # print("Connection from", self.addr[0])
         CA = clientAddress
         message = ''
         
@@ -46,10 +47,12 @@ class clientThread(threading.Thread):
             try:     
                 message = self.conn.recv(2048).decode('UTF-8')
                 print(message[:4]) 
-                filename = message[5:len(message)-1]
+                filename = message[5:len(message)-1] + "_Copy"
                 if message[:4] == "send":
+                    print(filename)
                     file = open(filename,'wb')
                     temp = self.conn.recv(2048)
+                    # print(temp)
                     while temp != b'end\n':
                         file.write(temp)
                         temp = self.conn.recv(2048)

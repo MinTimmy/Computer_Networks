@@ -37,6 +37,7 @@ while True:
                 message = socks.recv(2048).decode('UTF-8')
                 print (message)
         else:
+            sys.stdout.write("<You>")
             message = sys.stdin.readline()
             if message[0:4] == "send":
                 message = 'send 2.jpg\n'
