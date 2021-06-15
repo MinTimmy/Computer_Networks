@@ -1,4 +1,3 @@
-# from Chatting_Room.Demo1.Server import IP_address
 import socket
 import select
 import sys
@@ -11,17 +10,12 @@ if len(sys.argv) != 3:
 IP_address = str(sys.argv[1])
 Port = int(sys.argv[2])
 
-# IP_address = "127.0.0.1"
-# IP_address = "192.168.0.128"
-# IP_address = '172.20.10.6'
 Port = 8080
 
 server.connect((IP_address, Port))
-# print("Connecting successfully")
 sys.stdout.write("Connecting successfully\n<You>")
-# print("<you>",end='')
+
 while True:
-    # print("<you>",end='')
     sockets_list = [sys.stdin, server]
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
     for socks in read_sockets:
@@ -38,7 +32,6 @@ while True:
                 message = ""
                 message = socks.recv(2048).decode('UTF-8')
                 sys.stdout.write('\n' + message + "\n<You>")
-                # print ('\n' + message)
         else:
             message = sys.stdin.readline()
             if message[0:4] == "send":
@@ -46,7 +39,6 @@ while True:
                 server.sendall(bytes(message, 'UTF-8'))
                 time.sleep(1)
                 sys.stdout.write("<You>")
-                # sys.stdout.write(message)
                 sys.stdout.flush()
                 file = open(message[5:len(message)-1], 'rb')
                 imgData = file.readline(2048)
@@ -61,10 +53,11 @@ while True:
                 server.sendall(bytes('end\n', 'UTF-8'))
             else: 
                 server.sendall(bytes(message, 'UTF-8'))
-                if message == 'leave':
+                if message == 'leave\n':
+                    print("Disconnection.byb!!")
                     server.close()
+                    exit()
                 sys.stdout.write("<You>")
-                # sys.stdout.write(message)
                 sys.stdout.flush()
             
 server.close()

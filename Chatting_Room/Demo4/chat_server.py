@@ -27,7 +27,6 @@ server.bind((IP_address, Port))
 
 print("Server is on and waiting for clients.\n-------------------------------------------------------")
 
-#listens for 100 active connections. This number can be increased as per convenience
 list_of_clients=[]
 
 class clientThread(threading.Thread):
@@ -39,7 +38,6 @@ class clientThread(threading.Thread):
         print("New Connection: " , self.addr[0])
 
     def run(self):
-        # print("Connection from", self.addr[0])
         CA = clientAddress
         message = ''
         
@@ -52,17 +50,18 @@ class clientThread(threading.Thread):
                     print(filename)
                     file = open(filename,'wb')
                     temp = self.conn.recv(2048)
-                    # print(temp)
                     while temp != b'end\n':
                         file.write(temp)
                         temp = self.conn.recv(2048)
-                    # self.broadcast_file(filename,self.conn)
                     print("The file is received successfully.")
                     file.close()
                 else:
                     print(message)
                     print("<" + self.addr[0] + "> " + message)
                     message_to_send = "<" + self.addr[0] + "> " + message
+                    if message == 'leave\n':
+                        self.remove(self.conn)
+                        break
                     self.broadcast_message(message_to_send,self.conn)
             except:
                 self.remove(self.conn)
@@ -73,12 +72,9 @@ class clientThread(threading.Thread):
         print(list_of_clients)
         for clients in list_of_clients:
             if clients!=connection:
-                print("hello1")
                 clients.sendall(bytes('file', 'UTF-8'))
-                print("hello2")
                 time.sleep(2)
                 clients.sendall(bytes('file', 'UTF-8'))
-                print("hello3")
                 time.sleep(1)
                 try:
                     imgData = file.readline(2048)
@@ -93,15 +89,16 @@ class clientThread(threading.Thread):
                     server.sendall(bytes('end\n', 'UTF-8'))
                 except:
                     pass
-                    # clients.close()
-                    # self.remove(clients)
 
     def broadcast_message(self, message,connection):
         print("Do broadcast")
-        print(list_of_clients)
+        if len(list_of_clients) == 1:
+            print("No other users.")
         for clients in list_of_clients:
             if clients!=connection:
                 try:
+                    print("Broadcast to ",end='')
+                    print(clients.getsockname())
                     clients.sendall(bytes(message, 'UTF-8'))
                     time.sleep(2)
                     clients.sendall(bytes(message, 'UTF-8'))
@@ -124,16 +121,7 @@ while True:
     the IP address of the client that just connected
     """
     list_of_clients.append(clientAddress)
-    # print(clientSocket[0] + " connected")
     print(clientSocket[0] + " connected")
-    #maintains a list of clients for ease of broadcasting a message to all available people in the chatroom
-    #Prints the address of the person who just connected
-    # start_new_thread(clientthread,(conn,addr))
-    #creates and individual thread for every user that connects
-    # _thread.start_new_thread(clientthread,(conn,addr))
-
-    # print("hello")
-    # print(list_of_clients)
     newtread = clientThread(clientAddress, clientSocket)
     newtread.start()
 
