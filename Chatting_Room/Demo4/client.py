@@ -17,9 +17,11 @@ Port = int(sys.argv[2])
 Port = 8080
 
 server.connect((IP_address, Port))
-print("Connecting successfully")
-
+# print("Connecting successfully")
+sys.stdout.write("Connecting successfully\n<You>")
+# print("<you>",end='')
 while True:
+    # print("<you>",end='')
     sockets_list = [sys.stdin, server]
     read_sockets,write_socket, error_socket = select.select(sockets_list, [], [])
     for socks in read_sockets:
@@ -35,16 +37,16 @@ while True:
             else:
                 message = ""
                 message = socks.recv(2048).decode('UTF-8')
-                print (message)
+                sys.stdout.write('\n' + message + "\n<You>")
+                # print ('\n' + message)
         else:
-            sys.stdout.write("<You>")
             message = sys.stdin.readline()
             if message[0:4] == "send":
                 message = 'send 2.jpg\n'
                 server.sendall(bytes(message, 'UTF-8'))
                 time.sleep(1)
                 sys.stdout.write("<You>")
-                sys.stdout.write(message)
+                # sys.stdout.write(message)
                 sys.stdout.flush()
                 file = open(message[5:len(message)-1], 'rb')
                 imgData = file.readline(2048)
@@ -62,7 +64,7 @@ while True:
                 if message == 'leave':
                     server.close()
                 sys.stdout.write("<You>")
-                sys.stdout.write(message)
+                # sys.stdout.write(message)
                 sys.stdout.flush()
             
 server.close()
