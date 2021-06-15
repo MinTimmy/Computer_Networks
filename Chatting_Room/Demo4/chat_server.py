@@ -48,13 +48,13 @@ class clientThread(threading.Thread):
                 print(message[:4]) 
                 filename = message[5:len(message)-1]
                 if message[:4] == "send":
-                    file = open('buffer','wb')
+                    file = open(filename,'wb')
                     temp = self.conn.recv(2048)
                     while temp != b'end\n':
                         file.write(temp)
                         temp = self.conn.recv(2048)
-                    self.broadcast_file(filename,self.conn)
-                    print("end")
+                    # self.broadcast_file(filename,self.conn)
+                    print("The file is received successfully.")
                     file.close()
                 else:
                     print(message)
