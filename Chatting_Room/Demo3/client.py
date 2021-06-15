@@ -65,10 +65,13 @@ while True:
                 server.sendall(bytes('end\n', 'UTF-8'))
             else: 
                 server.sendall(bytes(message, 'UTF-8'))
+                if message == 'leave':
+                    server.close()
                 sys.stdout.write("<You>")
                 sys.stdout.write(message)
                 sys.stdout.flush()
             print("------------------------\nfinish Send\n-----------------------------")
+            
                
             
 server.close()

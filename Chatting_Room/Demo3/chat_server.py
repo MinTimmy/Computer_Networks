@@ -45,46 +45,36 @@ class clientThread(threading.Thread):
         while True:
             try:     
                 message = self.conn.recv(2048).decode('UTF-8')
-                print("fsidfhjslodfowedifjnweiofjiewofjewiofjeiwfweifjwo")
                 print(message[:4]) 
-                filename = message[5:len(filename)-1]
-                if message[:4] == 'send':
-                    
+                filename = message[5:len(message)-1]
+                if message[:4] == "send":
                     file = open('buffer','wb')
-                    print("hello")
                     temp = self.conn.recv(2048)
                     while temp != b'end\n':
                         file.write(temp)
                         temp = self.conn.recv(2048)
-                        # print(temp)
                     self.broadcast_file(filename,self.conn)
                     print("end")
                     file.close()
                 else:
-                    # print(message)
-                    # message = bytes(message, 'UTF-8')
-                    
-                    # print(message)
-                    # file.write(message)
-                    # print(message) 
-
-                    # time.sleep(10)
+                    print(message)
                     print("<" + self.addr[0] + "> " + message)
                     message_to_send = "<" + self.addr[0] + "> " + message
                     self.broadcast_message(message_to_send,self.conn)
-                    #prints the message and address of the user who just sent the message on the server terminal 
             except:
                 self.remove(self.conn)
                 continue
     def broadcast_file(self, filename, connection):
         print("Do broadcast")
         file = open("buffer", 'rb')
-        # print(list_of_clients)
         for clients in list_of_clients:
             if clients!=connection:
+                print("hello1")
                 server.sendall(bytes('file', 'UTF-8'))
+                print("hello2")
                 time.sleep(2)
                 server.sendall(bytes('file', 'UTF-8'))
+                print("hello3")
                 time.sleep(1)
                 try:
                     imgData = file.readline(2048)
