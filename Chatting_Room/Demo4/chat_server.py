@@ -20,9 +20,9 @@ if len(sys.argv) != 3:
     exit()
 IP_address = str(sys.argv[1])
 Port = int(sys.argv[2])
-IP_address = socket.gethostbyname(socket.gethostname())
-
-Port = 8080
+# IP_address = socket.gethostbyname(socket.gethostname())
+print(IP_address)
+# Port = 8080
 server.bind((IP_address, Port)) 
 
 print("Server is on and waiting for clients.\n-------------------------------------------------------")
@@ -44,10 +44,10 @@ class clientThread(threading.Thread):
         while True:
             try:     
                 message = self.conn.recv(2048).decode('UTF-8')
-                print(message[:4]) 
+                # print(message[:4]) 
                 filename = message[5:len(message)-1] + "_Copy"
                 if message[:4] == "send":
-                    print(filename)
+                    print("You receive " + filename)
                     file = open(filename,'wb')
                     temp = self.conn.recv(2048)
                     while temp != b'end\n':
