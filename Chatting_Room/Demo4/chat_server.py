@@ -38,7 +38,6 @@ class clientThread(threading.Thread):
         print("New Connection: " , self.addr[0])
 
     def run(self):
-        CA = clientAddress
         message = ''
         
         while True:
